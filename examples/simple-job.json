@@ -1,0 +1,19 @@
+{
+  "max_workers": 2,
+  "cleanup_on_completion": true,
+  "parallel": false,
+  "jobs": [
+    {
+      "name": "simple-test-job",
+      "repo_url": "https://github.com/octocat/Hello-World.git",
+      "commit": "master",
+      "script": "echo 'Testing job scheduler' && date && whoami && pwd",
+      "work_dir": "",
+      "env_vars": {
+        "TEST_VAR": "test_value",
+        "JOB_ID": "001"
+      },
+      "timeout": 120
+    }
+  ]
+}
