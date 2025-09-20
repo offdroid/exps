@@ -1,0 +1,38 @@
+max_workers: 3
+cleanup_on_completion: true
+parallel: true
+jobs:
+  - name: "quick-test"
+    repo_url: "https://github.com/octocat/Hello-World.git"
+    commit: "master"
+    script: |
+      echo "=== Quick Test Job ==="
+      echo "Working directory: $(pwd)"
+      echo "Repository contents:"
+      ls -la
+      echo "Current commit:"
+      git log --oneline -1
+      echo "Test completed successfully!"
+    work_dir: ""
+    env_vars:
+      JOB_TYPE: "quick-test"
+      TEST_ENV: "development"
+    timeout: 60
+    
+  - name: "filesystem-check"
+    repo_url: "https://github.com/octocat/Hello-World.git"
+    commit: "master"
+    script: |
+      echo "=== Filesystem Check Job ==="
+      echo "Disk usage:"
+      df -h | head -2
+      echo "Memory info:"
+      free -h
+      echo "File count in repo:"
+      find . -type f | wc -l
+      echo "README content:"
+      cat README 2>/dev/null || echo "No README found"
+    work_dir: ""
+    env_vars:
+      JOB_TYPE: "system-check"
+    timeout: 90

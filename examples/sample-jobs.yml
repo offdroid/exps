@@ -1,0 +1,33 @@
+max_workers: 4
+cleanup_on_completion: true
+parallel: true
+jobs:
+  - name: "hello-world-example"
+    repo_url: "https://github.com/octocat/Hello-World.git"
+    commit: "master"
+    script: |
+      echo "Hello from job scheduler!"
+      echo "Current directory: $(pwd)"
+      echo "Repository contents:"
+      ls -la
+      echo "Git status:"
+      git status
+    work_dir: ""
+    env_vars:
+      JOB_NAME: "hello-world-example"
+      ENVIRONMENT: "test"
+    timeout: 300
+    
+  - name: "python-test-job"
+    repo_url: "https://github.com/python/cpython.git"
+    commit: "main"
+    script: |
+      echo "Python repository cloned successfully!"
+      echo "Checking Python version info:"
+      ls -la | head -10
+      echo "Looking for Python files:"
+      find . -name "*.py" -type f | head -5
+    work_dir: ""
+    env_vars:
+      PYTHONPATH: "/usr/local/lib/python3.12"
+    timeout: 600
